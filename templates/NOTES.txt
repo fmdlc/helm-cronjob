@@ -1,0 +1,7 @@
+1. Get CronJob status by running these commands:
+$: kubectl get cronjobs -n {{ .Release.Namespace }}
+
+2. Verify that your pod is periodically schedule according your definition.
+$: kubectl get pods -n {{ .Release.Namespace }}
+
+Visit: https://fmdlc.github.io/helm-cronjob/ for future releases and help.

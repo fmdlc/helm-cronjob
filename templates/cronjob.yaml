@@ -1,0 +1,74 @@
+{{- $chart_name := .Chart.Name }}
+{{- $chart_version := .Chart.Version | replace "+" "_" }}
+{{- $release_name := .Release.Name }}
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ $chart_name }}
+  namespace: {{ .Values.namespace | default "default" }}
+spec:
+  schedule: {{ .Values.cron.schedule | quote }}
+  successfulJobsHistoryLimit: {{ .Values.cron.successfulJobsHistoryLimit | default 3 }}
+  failedJobsHistoryLimit: {{ .Values.cron.failedJobsHistoryLimit | default 2}}
+  concurrencyPolicy: {{ .Values.cron.concurrencyPolicy | default 1 }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ .Release.Name }}
+            app.kubernetes.io/name: {{ $chart_name }}-{{ $chart_version }}
+            app.kubernetes.io/release_name: {{ $release_name | quote }}
+            app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        spec:
+        {{- if .Values.securityContext }}
+          securityContext:
+            {{- if .Values.securityContext.runAsUser }}
+            runAsUser: {{ .Values.securityContext.runAsUser }}
+            {{- end }}
+            {{- if .Values.securityContext.runAsGroup }}
+            runAsGroup: {{ .Values.securityContext.runAsGroup }}
+            {{- end }}
+            {{- if .Values.securityContext.fsGroup }}
+            fsGroup: {{ .Values.securityContext.fsGroup }}
+            {{- end }}
+          {{- end }}
+          imagePullSecrets:
+            - name: {{ .Values.imagePullSecrets }}
+          containers:
+          - name: {{ .Chart.Name }}
+            image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+            imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" | quote }}
+            resources:
+            {{- with .Values.resources }}
+              limits:
+                cpu: {{ .limits.cpu }}
+                memory: {{ .limits.memory | quote  }}
+              requests:
+                cpu: {{ .limits.cpu }}
+                memory: {{ .limits.memory | quote }}
+            {{- end }}
+          {{- if .Values.cron.command }}
+            command: {{ .Values.cron.command }}
+          {{- if .Values.cron.args }}
+            args:
+            {{- range $.Values.cron.args }}
+              - {{ . | quote }}
+          {{- end }}
+            {{- end }}
+          {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          restartPolicy: {{ .Values.cron.restartPolicy | default "Never" | quote }}
+

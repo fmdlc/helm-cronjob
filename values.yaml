@@ -1,0 +1,77 @@
+## Default values for host-notification-processor.
+## This is a YAML-formatted file.
+##----------------------------------------------------------------------------------
+
+## Set namespace (default is "default")
+namespace: "default"
+
+image:
+  repository: alpine
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  pullPolicy: IfNotPresent
+  tag: 3.7
+
+##----------------------------------------------------------------------------------
+## Secrets must be manually created in the namespace.
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+#imagePullSecrets: regcred
+##----------------------------------------------------------------------------------
+cron:
+  restartPolicy: Never
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  ##----------------------------------------------------------------------------------
+  ## Setup schedule to run every 10 minutes
+  ##            ┌───────────── minute (0 - 59)
+  ##            │ ┌───────────── hour (0 - 23)
+  ##            │ │ ┌───────────── day of the month (1 - 31)
+  ##            │ │ │ ┌───────────── month (1 - 12)
+  ##            │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday)
+  ##            │ │ │ │ │
+  ##----------------------------------------------------------------------------------
+  schedule: "*/10 * * * *"
+  parallelism: 1
+  ##----------------------------------------------------------------------------------
+  ## Uncomment to use Environment variables
+  ##----------------------------------------------------------------------------------
+  #env:
+  #- name: ENV_VAR_1
+  #    value: ENV_VALUE_1
+  #- name: ENV_VAR_2
+  #    value: ENV_VALUE_2
+  #
+  ##----------------------------------------------------------------------------------
+  ## User custom command
+  ##----------------------------------------------------------------------------------
+  #command: ["command"]
+  #args:
+  #  - "argument"
+
+##----------------------------------------------------------------------------------
+## Pod Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##----------------------------------------------------------------------------------
+#securityContext:
+#  runAsUser: 1000
+#  runAsGroup: 1000
+#  fsGroup: 2000
+
+##----------------------------------------------------------------------------------
+## I usually recommend not to specify default resources and to leave this as a conscious
+## choice for the user. This also increases chances charts run on environments with little
+## resources, such as Minikube.
+##----------------------------------------------------------------------------------
+resources:
+  limits:
+    cpu: 1
+    memory: 200Mi
+  requests:
+    cpu: 0.5
+    memory: 100Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
