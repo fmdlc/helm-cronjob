@@ -1,37 +1,70 @@
-## Welcome to GitHub Pages
+# helm-cronjob
+![](https://img.shields.io/github/last-commit/fmdlc/helm-cronjob)
+![https://github.com/fmdlc/helm-cronjob/issues](https://img.shields.io/github/issues-raw/fmdlc/helm-cronjob)
+![](https://img.shields.io/github/forks/fmdlc/helm-cronjob?style=plastic)
+![https://github.com/fmdlc/helm-cronjob/blob/master/LICENSE](https://img.shields.io/github/license/fmdlc/helm-cronjob)
 
-You can use the [editor on GitHub](https://github.com/fmdlc/helm-cronjob/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Helm Chart to to define and run a Kubernetes scheduled task by defining a `cronjob` ojbect ☸.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```yaml
+namespace: "default"
+image:
+  repository: alpine
+  pullPolicy: IfNotPresent
+  tag: 3.7
+cron:
+  restartPolicy: Never
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  schedule: "*/10 * * * *"
+  parallelism: 1
+  env:
+  - name: DB_NAME
+      value: "my_db"
+  command: ["sleep"]
+  args:
+    - 10
+resources:
+  limits:
+    cpu: 1
+    memory: 200Mi
+  requests:
+    cpu: 0.5
+    memory: 100Mi
+nodeSelector: {}
+tolerations: []
+affinity: {}
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Usage
+1) Edit `values.yaml` file in order to setup your environment.
 
-### Jekyll Themes
+2) First test installation with `--dry-run` parameter. You can specify the namespace by using `-n` modificator or alter any input parameter with `--set=<PARAMETER:VALUE>`.
+3) If definition works as expected remove the `--dry-run` from the arguments.
+```bash
+$: helm install my-cronjob . --dry-run
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/fmdlc/helm-cronjob/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+NAME: my-cronjob
+LAST DEPLOYED: Sun Aug 23 18:57:08 2020
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+TEST SUITE: None
+HOOKS:
+MANIFEST:
+---
+# Source: health-service/templates/cronjob.yaml
+apiVersion: batch/v1beta1
+kind: CronJob
+...
+```
 
-### Support or Contact
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Please make sure to update tests as appropriate.
+
+## License
+[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
