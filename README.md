@@ -4,7 +4,7 @@
 ![](https://img.shields.io/github/forks/fmdlc/helm-cronjob?style=plastic)
 ![https://github.com/fmdlc/helm-cronjob/blob/master/LICENSE](https://img.shields.io/github/license/fmdlc/helm-cronjob)
 
-Helm Chart to to define and run a Kubernetes scheduled task by defining a `cronjob` ojbect ☸.
+Helm Chart to define and run a Kubernetes scheduled task by defining a `cronjob` ojbect ☸.
 
 
 ```yaml
