@@ -1,4 +1,5 @@
 # helm-cronjob template
+![https://github.com/fmdlc/helm-cronjob/actions](https://github.com/fmdlc/helm-cronjob/workflows/Lint%20Charts/badge.svg?branch=master)
 ![](https://img.shields.io/github/last-commit/fmdlc/helm-cronjob)
 ![https://github.com/fmdlc/helm-cronjob/issues](https://img.shields.io/github/issues-raw/fmdlc/helm-cronjob)
 ![](https://img.shields.io/github/forks/fmdlc/helm-cronjob?style=plastic)
