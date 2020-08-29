@@ -26,8 +26,7 @@ jobs:
         id: template
         uses: helm/chart-testing-action@v1.0.0
         with:
-          command: template
-          args: "cronjob ./cronjob"
+          command: "template cronjob ./cronjob"
       - name: Helm Package
         uses: Flydiverny/helm-package-action@0.1.0
         with:
