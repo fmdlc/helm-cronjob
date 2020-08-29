@@ -68,7 +68,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## Authors
-Module managed by [Facu de la Cruz](https://www.linkedin.com/in/fmdlc/)
+Module managed by [Facu de la Cruz](mailto:fmdlc.unix@gmail.com)
 
 ## License
 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
