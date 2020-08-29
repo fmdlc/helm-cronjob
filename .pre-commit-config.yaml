@@ -1,0 +1,21 @@
+repos:
+  - repo: git://github.com/detailyang/pre-commit-shell
+    rev: v1.0.6
+    hooks:
+      - id: shell-lint
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0  # Use the ref you want to point at
+    hooks:
+      - id: trailing-whitespace
+      - id: detect-private-key
+      - id: check-symlinks
+      - id: check-yaml
+      - id: mixed-line-ending
+      - id: pretty-format-json
+        args: ["--autofix"]
+      - id: forbid-new-submodules
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.10
+    hooks:
+      - id: helmlint
+      - id: markdown-link-check
