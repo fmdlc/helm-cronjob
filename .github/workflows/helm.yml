@@ -31,4 +31,5 @@ jobs:
           args: "cronjob ./cronjob"
       - name: Helm Package
         uses: Flydiverny/helm-package-action@0.1.0
-        args: "./cronjob -d ./stable"
+        with:
+          args: "./cronjob -d ./stable"
