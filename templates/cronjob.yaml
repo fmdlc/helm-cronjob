@@ -71,4 +71,3 @@ spec:
 {{ toYaml . | indent 12 }}
           {{- end }}
           restartPolicy: {{ .Values.cron.restartPolicy | default "Never" | quote }}
-
