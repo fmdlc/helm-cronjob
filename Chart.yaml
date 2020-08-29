@@ -1,9 +1,10 @@
 apiVersion: v2
-name: health-service
-description: A Helm chart for Kubernetes
+name: cronjob
+description: A Helm chart to create a CronJob in Kubernetes
+icon: https://avatars3.githubusercontent.com/u/2071428?s=460&u=de66c77c8c95bfab7235e99c5b415ecfacd45082&v=4
 
 type: application
 service: cronjob
 
-version: 1.0
-appVersion: 1.0
+version: 1.0.0
+appVersion: 1.0.0
