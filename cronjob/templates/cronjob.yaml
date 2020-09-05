@@ -10,6 +10,7 @@ metadata:
   namespace: {{ .Values.namespace | default "default" }}
 spec:
   schedule: {{ .Values.cron.schedule | quote }}
+  startingDeadlineSeconds: {{ .Values.cron.startingDeadlineSeconds | default 100 }}
   successfulJobsHistoryLimit: {{ .Values.cron.successfulJobsHistoryLimit | default 3 }}
   failedJobsHistoryLimit: {{ .Values.cron.failedJobsHistoryLimit | default 2}}
   concurrencyPolicy: {{ .Values.cron.concurrencyPolicy | default 1 }}

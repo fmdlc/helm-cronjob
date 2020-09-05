@@ -20,6 +20,7 @@ cron:
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 3
   schedule: "*/10 * * * *"
+  startingDeadlineSeconds: 100
   parallelism: 1
   env:
   - name: DB_NAME

@@ -6,5 +6,5 @@ icon: https://avatars3.githubusercontent.com/u/2071428?s=460&u=de66c77c8c95bfab7
 type: application
 service: cronjob
 
-version: 1.0.0
-appVersion: 1.0.0
+version: 1.0.1
+appVersion: 1.0.1
